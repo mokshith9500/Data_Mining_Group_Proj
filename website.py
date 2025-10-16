@@ -108,72 +108,49 @@ with tab1:
 with tab2:
     st.markdown('<h2 class="sub-header">👥 Meet Our Team</h2>', unsafe_allow_html=True)
     
-    # Team Mission Statement
     st.info("🎯 **Team Mission Statement**\n\n*To leverage cutting-edge data science and machine learning techniques to transform public safety in San Francisco, creating predictive solutions that protect communities while optimizing resource allocation for maximum societal impact.*")
     
     st.markdown("---")
     
-    # Team member 1
+    # Team members (Siddhi, Sejal, Mokshith)
     col1, col2 = st.columns([1, 3])
-    
     with col1:
         st.image("formal.jpg", width=500)
-    
     with col2:
         st.subheader("Siddhi Muni- Data Lead")
-        st.write("**Brief Bio:** I'm a builder and a problem-solver, with a particular fascination for generative AI. My passion lies in taking a challenge and deconstructing it, then using AI to build a solution from the ground up. Whether it's developing a new algorithm to streamline a workflow or creating a model that can generate unique content, I am dedicated to crafting robust and effective tools. My goal is to not only solve the problem at hand but also to create scalable, intelligent systems that can adapt to future needs.")
-    
-        st.write("**Team Role/Responsibilities:**")
-        st.write("• Data preprocessing and feature engineering")
-        st.write("• Leading machine learning model development and validation")
-       
-        st.write("**Portfolio Links:**")
-        st.write("📧 siddhimuni1302@gmail.com | 💼 [LinkedIn](www.linkedin.com/in/siddhimuni) | 🐙 [GitHub](https://github.com/siddhimuni) | 🌐 [Google Scholar](https://scholar.google.com/citations?user=pSDJxbQAAAAJ&hl=en)")
-    
+        st.write("**Brief Bio:** I'm a builder and a problem-solver, with a particular fascination for generative AI...")
+        st.write("**Team Role/Responsibilities:**\n• Data preprocessing and feature engineering\n• Leading machine learning model development and validation")
+        st.write("**Portfolio Links:**\n📧 siddhimuni1302@gmail.com | 💼 [LinkedIn](www.linkedin.com/in/siddhimuni) | 🐙 [GitHub](https://github.com/siddhimuni) | 🌐 [Google Scholar](https://scholar.google.com/citations?user=pSDJxbQAAAAJ&hl=en)")
+
     st.markdown("---")
-    
-    # Team member 2
     col1, col2 = st.columns([1, 3])
     with col1:
         st.markdown('<div class="team-card">', unsafe_allow_html=True)
         st.image("portfolio.jpg", caption="Sejal Hukare")
         st.markdown('</div>', unsafe_allow_html=True)
-    
     with col2:
-        st.subheader("Sejal Hukare - Pipeline and ML ")
-        st.write("**Brief Bio:** I’m a passionate coding and tech enthusiast, always eager to dive into new challenges and explore the ever-evolving world of technology. My curiosity drives me to continuously learn and grow, while my love for connecting with people fuels my ability to collaborate and innovate. Whether it’s solving complex problems or exchanging ideas, I thrive in environments where creativity and learning intersect.")
-        st.write("**Team Role/Responsibilities:**")
-        st.write("• Machine learning model architecture and optimization")
-        st.write("• Data pipeline development and deployment")
-        st.write("**Portfolio Links:**")
-        st.write("📧 sejal.hukare@colorado.edu | 💼 [LinkedIn](www.linkedin.com/in/sejal-hukare) | 🐙 [GitHub](https://github.com/sezol) ")
-    
+        st.subheader("Sejal Hukare - Pipeline and ML")
+        st.write("**Brief Bio:** I’m a passionate coding and tech enthusiast...")
+        st.write("**Team Role/Responsibilities:**\n• Machine learning model architecture and optimization\n• Data pipeline development and deployment")
+        st.write("**Portfolio Links:**\n📧 sejal.hukare@colorado.edu | 💼 [LinkedIn](www.linkedin.com/in/sejal-hukare) | 🐙 [GitHub](https://github.com/sezol)")
+
     st.markdown("---")
-    
-    # Team member 3
     col1, col2 = st.columns([1, 3])
+    with col1:
+        st.markdown('<div class="team-card">', unsafe_allow_html=True)
+        st.image("profile (2).jpg", caption="Mokshith")
+        st.markdown('</div>', unsafe_allow_html=True)
+    with col2:
+        st.subheader("Mokshith - Data & Feature Engineer")
+        st.write("**Brief Bio:** I’m passionate about uncovering hidden patterns in data...")
+        st.write("**Team Role/Responsibilities:**\n• Data preprocessing and feature engineering\n• Supporting machine learning model development")
+        st.write("**Portfolio Links:**\n📧 mokshit.Palleboina@colorado.edu | 💼 [LinkedIn](www.linkedin.com/in/mokshith-sreekar-915bb6249) | 🐙 [GitHub](https://github.com/mokshith9500) | 🌐 [IEEE Explore](https://ieeexplore.ieee.org/author/220685108923536)")
 
-with col1:
-    st.markdown('<div class="team-card">', unsafe_allow_html=True)
-    st.image("profile (2).jpg", caption="Mokshith")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with col2:
-    st.subheader("Mokshith - Data & Feature Engineer")
-    st.write("**Brief Bio:** I’m passionate about uncovering hidden patterns in data and turning raw information into actionable insights. I enjoy getting hands-on with datasets—cleaning, preprocessing, and engineering features—to help predictive models perform at their best. Beyond the numbers, I love experimenting with creative solutions and seeing how data can make real-world decisions smarter and more efficient.")
-    st.write("**Team Role/Responsibilities:**")
-    st.write("• Data preprocessing and feature engineering")
-    st.write("• Supporting machine learning model development")
-    st.write("**Portfolio Links:**")
-    st.write("📧 mokshit.Palleboina@colorado.edu | 💼 [LinkedIn](www.linkedin.com/in/mokshith-sreekar-915bb6249) | 🐙 [GitHub](https://github.com/mokshith9500) | 🌐 [IEEE Explore](https://ieeexplore.ieee.org/author/220685108923536)")
-
-    
     st.markdown("---")
 
 with tab3:
     st.markdown('<h2 class="sub-header">📋 Quick Reference Summary</h2>', unsafe_allow_html=True)
     
-    # Research Topic
     st.markdown("""
     <div class="highlight-box">
         <h3>🔬 Research Topic</h3>
@@ -181,20 +158,16 @@ with tab3:
     </div>
     """, unsafe_allow_html=True)
     
-    # Project Scope
     st.markdown('<h3 class="sub-header">📊 Project Scope</h3>', unsafe_allow_html=True)
-    
     col1, col2 = st.columns(2)
-    
     with col1:
         st.markdown("""
-        **Dataset & Coverage:**
+        **Dataset & Coverage:**  
         • **Dataset:** San Francisco Crime Data  
         • **Volume:** 500,000+ incident records  
         • **Time Period:** Multi-year historical analysis  
         • **Geographic Focus:** All SF neighborhoods and police districts  
         """)
-    
     with col2:
         st.markdown("""
         **Analysis Approach:**  
@@ -203,106 +176,86 @@ with tab3:
         • **Techniques:** Geospatial analysis, predictive modeling  
         • **Output:** Interactive dashboards and recommendations  
         """)
-    
+
     # Mock Data Generation
-    # In a real project, you would load your data here
     np.random.seed(0)
     dates = pd.to_datetime(pd.date_range('2021-01-01', '2024-12-31', freq='D'))
     data_points = len(dates)
-    
     crime_categories = ['Vehicle Theft', 'Robbery', 'Burglary', 'Assault', 'Vandalism']
     districts = ['Central', 'Southern', 'Northern', 'Bayview', 'Mission', 'Richmond', 'Ingleside', 'Park', 'Taraval', 'Tenderloin']
-    
     df = pd.DataFrame({
         'Date': np.random.choice(dates, data_points * 5, replace=True),
         'Category': np.random.choice(crime_categories, data_points * 5, replace=True),
         'District': np.random.choice(districts, data_points * 5, replace=True),
         'Incidents': np.random.randint(1, 10, data_points * 5)
     })
-    
-    # Dynamic Filtering Sidebar
+
     st.markdown("### Interactive Crime Dashboard (Mock Data)")
-    
-    st.markdown('<div class="text-block">Use the sliders and filters below to explore how crime trends change over time, by category, and by district. This interactive dashboard demonstrates how we will present our project\'s findings.</div>', unsafe_allow_html=True)
-
+    st.markdown('<div class="text-block">Use the sliders and filters below to explore how crime trends change over time, by category, and by district.</div>', unsafe_allow_html=True)
     col_filters1, col_filters2 = st.columns(2)
-    
     with col_filters1:
-        selected_years = st.slider(
-            "Select Year Range:",
-            min_value=2021, max_value=2024, value=(2022, 2024)
-        )
-        selected_categories = st.multiselect(
-            "Select Crime Categories:",
-            options=crime_categories,
-            default=crime_categories
-        )
-
+        selected_years = st.slider("Select Year Range:", 2021, 2024, (2022, 2024))
+        selected_categories = st.multiselect("Select Crime Categories:", options=crime_categories, default=crime_categories)
     with col_filters2:
-        selected_districts = st.multiselect(
-            "Select Districts:",
-            options=districts,
-            default=districts
-        )
-        
+        selected_districts = st.multiselect("Select Districts:", options=districts, default=districts)
     filtered_df = df[
         (df['Date'].dt.year >= selected_years[0]) &
         (df['Date'].dt.year <= selected_years[1]) &
         (df['Category'].isin(selected_categories)) &
         (df['District'].isin(selected_districts))
     ]
-    
+
     # Display statistics
     st.markdown('<h3 class="sub-header">Key Statistics</h3>', unsafe_allow_html=True)
     col_stats1, col_stats2, col_stats3 = st.columns(3)
-    
     with col_stats1:
-        st.metric(label="Total Incidents (in range)", value=f"{filtered_df['Incidents'].sum():,}")
+        st.metric("Total Incidents (in range)", f"{filtered_df['Incidents'].sum():,}")
     with col_stats2:
-        st.metric(label="Average Daily Incidents", value=f"{filtered_df['Incidents'].sum() / (filtered_df['Date'].nunique()):.2f}")
+        st.metric("Average Daily Incidents", f"{filtered_df['Incidents'].sum() / (filtered_df['Date'].nunique()):.2f}")
     with col_stats3:
-        st.metric(label="Most Common Crime", value=filtered_df['Category'].mode()[0] if not filtered_df.empty else "N/A")
-    
+        st.metric("Most Common Crime", filtered_df['Category'].mode()[0] if not filtered_df.empty else "N/A")
+
     # Crime Trends Over Time
     st.markdown('<h3 class="sub-header">Crime Trends Over Time</h3>', unsafe_allow_html=True)
     trend_data = filtered_df.groupby(filtered_df['Date'].dt.to_period('M'))['Incidents'].sum().reset_index()
     trend_data['Date'] = trend_data['Date'].astype(str)
-    
-    fig_time = px.line(
-        trend_data,
-        x='Date',
-        y='Incidents',
-        title='Monthly Crime Incidents Trend'
-    )
+    fig_time = px.line(trend_data, x='Date', y='Incidents', title='Monthly Crime Incidents Trend')
     st.plotly_chart(fig_time, use_container_width=True)
-    
+
     # Crime Distribution by District
     st.markdown('<h3 class="sub-header">Crime Distribution by District</h3>', unsafe_allow_html=True)
     district_data = filtered_df.groupby('District')['Incidents'].sum().reset_index()
-    
-    fig_district = px.bar(
-        district_data,
-        x='District',
-        y='Incidents',
-        title='Total Incidents by District'
-    )
+    fig_district = px.bar(district_data, x='District', y='Incidents', title='Total Incidents by District')
     st.plotly_chart(fig_district, use_container_width=True)
 
-    # Sample visualization of crime types
+    # Key Research Questions
     st.markdown('<h3 class="sub-header">❓ Key Research Questions</h3>', unsafe_allow_html=True)
-    
     questions = [
-        "🕐 **Temporal Analysis:** When do specific crime types peak? (time of day, season, day of week)",
-        "📍 **Spatial Analysis:** Where are crime hotspots located and why?",
-        "🔮 **Predictive Modeling:** Can we predict crime type and likelihood by location/time?",
-        "🚔 **Resource Optimization:** How should police allocate patrol resources?",
-        "🏘️ **Comparative Analysis:** How do different neighborhoods compare in crime patterns?",
-        "🔗 **Causal Relationships:** What factors drive crime rate fluctuations?"
+        "🕐 Temporal Analysis: When do specific crime types peak?",
+        "📍 Spatial Analysis: Where are crime hotspots located and why?",
+        "🔮 Predictive Modeling: Can we predict crime type and likelihood by location/time?",
+        "🚔 Resource Optimization: How should police allocate patrol resources?",
+        "🏘️ Comparative Analysis: How do different neighborhoods compare in crime patterns?",
+        "🔗 Causal Relationships: What factors drive crime rate fluctuations?"
     ]
-    
     for i, question in enumerate(questions, 1):
         st.markdown(f"{i}. {question}")
-    
+
+    # Phase 2 Conclusion
+    st.markdown('<h2 class="sub-header">📌 Phase 2 Conclusion</h2>', unsafe_allow_html=True)
+    st.write("""
+    Phase 2 focused on exploring and understanding the San Francisco crime dataset to extract meaningful insights across time, space, and crime categories.
+
+    **Key Insights:**
+    - **Spatial Concentration:** Mission, Tenderloin, and SoMa are high-crime neighborhoods.
+    - **Temporal Patterns:** Peak incidents occur on Fridays and Wednesdays, primarily between 12 PM–7 PM.
+    - **Dominant Crime Types:** Larceny/Theft and vehicle-related crimes dominate.
+    - **District-Level Patterns:** Southern, Mission, and Central districts report the highest number of incidents.
+    - **Resolution Insights:** Many cases result in citations or arrests, while a notable number remain open or active.
+
+    This analysis establishes a clean, structured, and interpretable dataset, enabling stakeholders to explore trends and form the foundation for predictive modeling and strategic recommendations in Phase 3.
+    """)
+
 # Footer
 st.markdown("---")
 st.markdown("""

@@ -2,3 +2,6 @@ numpy
 streamlit
 pandas
 plotly.express
+requests
+python-dotenv
+wordcloud

@@ -2,6 +2,7 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 import numpy as np
+import os
 
 # Page configuration
 st.set_page_config(
@@ -57,8 +58,8 @@ st.markdown("""
 st.markdown('<h1 class="main-header">🚔 Predicting Crime Patterns in San Francisco</h1>', unsafe_allow_html=True)
 st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Optimizing Public Safety Resource Allocation Through Data Science</p>', unsafe_allow_html=True)
 
-# Create tabs
-tab1, tab2, tab3 = st.tabs(["📊 Introduction", "👥 Team", "📋 Proposal Overview"])
+# Create tabs - Added Phase 2 EDA as fourth tab
+tab1, tab2, tab3, tab4 = st.tabs(["📊 Introduction", "👥 Team", "📋 Proposal Overview", "🔍 Phase 2 – EDA"])
 
 with tab1:
     st.markdown('<h2 class="sub-header">Research Topic & Significance</h2>', unsafe_allow_html=True)
@@ -130,7 +131,7 @@ with tab2:
         st.markdown('</div>', unsafe_allow_html=True)
     with col2:
         st.subheader("Sejal Hukare - Pipeline and ML")
-        st.write("**Brief Bio:** I’m a passionate coding and tech enthusiast...")
+        st.write("**Brief Bio:** I'm a passionate coding and tech enthusiast...")
         st.write("**Team Role/Responsibilities:**\n• Machine learning model architecture and optimization\n• Data pipeline development and deployment")
         st.write("**Portfolio Links:**\n📧 sejal.hukare@colorado.edu | 💼 [LinkedIn](www.linkedin.com/in/sejal-hukare) | 🐙 [GitHub](https://github.com/sezol)")
 
@@ -142,7 +143,7 @@ with tab2:
         st.markdown('</div>', unsafe_allow_html=True)
     with col2:
         st.subheader("Mokshith - Data & Feature Engineer")
-        st.write("**Brief Bio:** I’m passionate about uncovering hidden patterns in data...")
+        st.write("**Brief Bio:** I'm passionate about uncovering hidden patterns in data...")
         st.write("**Team Role/Responsibilities:**\n• Data preprocessing and feature engineering\n• Supporting machine learning model development")
         st.write("**Portfolio Links:**\n📧 mokshit.Palleboina@colorado.edu | 💼 [LinkedIn](www.linkedin.com/in/mokshith-sreekar-915bb6249) | 🐙 [GitHub](https://github.com/mokshith9500) | 🌐 [IEEE Explore](https://ieeexplore.ieee.org/author/220685108923536)")
 
@@ -255,6 +256,96 @@ with tab3:
 
     This analysis establishes a clean, structured, and interpretable dataset, enabling stakeholders to explore trends and form the foundation for predictive modeling and strategic recommendations in Phase 3.
     """)
+
+# Phase 2 EDA Tab
+with tab4:
+    st.markdown('<h2 class="sub-header">🧠 Phase 2 – Exploratory Data Analysis (EDA)</h2>', unsafe_allow_html=True)
+
+    st.write("""
+    Phase 2 focuses on **deep exploratory data analysis (EDA)** to extract meaningful insights
+    from the San Francisco crime dataset. This phase emphasizes cleaning, transformation,
+    and visualization to identify underlying trends and relationships between crime variables.
+    """)
+
+    # --- Data Cleaning & Transformation ---
+    st.markdown('<h3 class="sub-header">🧹 Data Cleaning & Transformation</h3>', unsafe_allow_html=True)
+    st.write("""
+    Before analysis, the dataset underwent essential preprocessing steps:
+    - **Missing Values Handling:** Removed or imputed missing records.
+    - **Duplicate Removal:** Cleaned redundant entries ensuring unique crime incidents.
+    - **Feature Refinement:** Dropped irrelevant columns and encoded categorical data.
+    - **Outlier Detection:** Identified anomalies using z-scores and IQR methods.
+    - **Normalization:** Standardized data to improve model consistency.
+    - **Date-Time Extraction:** Extracted features like `Year`, `Month`, `Day of Week`, and `Hour`.
+    """)
+
+    # --- Correlation Heatmaps ---
+    st.markdown('<h3 class="sub-header">📊 Correlation Analysis</h3>', unsafe_allow_html=True)
+    for img_name, caption in [
+        ("coorelation_heatmap", "Correlation Heatmap (Before Cleaning)"),
+        ("coorelation_heatmap_cleaned", "Correlation Heatmap (After Cleaning)")
+    ]:
+        if os.path.exists(f"{img_name}.png"):
+            st.image(f"{img_name}.png", caption=caption, use_container_width=True)
+        else:
+            st.warning(f"⚠️ {img_name}.png not found in directory.")
+
+    st.write("""
+    The correlation heatmaps help in identifying **relationships between variables**
+    and highlight **redundant or highly correlated features** that can be removed
+    to improve model interpretability and reduce overfitting.
+    """)
+
+    # --- Visualization Analysis ---
+    st.markdown('<h3 class="sub-header">📈 Visualization Insights</h3>', unsafe_allow_html=True)
+    st.write("""
+    The following visualizations represent the core findings of our EDA process.
+    Each chart uncovers temporal, spatial, and categorical crime patterns.
+    """)
+
+    visualizations = [
+        ("crime_type_distribution", "Crime Type Distribution",
+         "Displays frequency of different crime categories, showing dominance of larceny/theft and vehicle crimes."),
+        ("monthly_trend", "Monthly Trend of Crimes",
+         "Shows seasonal variations in crime rates across different months."),
+        ("day_of_week", "Crimes by Day of the Week",
+         "Highlights how crime frequency peaks around Fridays and weekends."),
+        ("hourly_pattern", "Hourly Crime Pattern",
+         "Depicts the time-of-day effect — showing concentration between 12 PM and 7 PM."),
+        ("neighborhood_hotspots", "Neighborhood Crime Hotspots",
+         "Displays areas with highest incident density — Tenderloin, Mission, and SoMa."),
+        ("district_comparison", "District-Level Comparison",
+         "Compares total incidents across all SF police districts."),
+        ("wordcloud", "Crime Type Wordcloud",
+         "Visual representation of the most frequent crime types using text prominence.")
+    ]
+
+    for img_name, title, desc in visualizations:
+        st.markdown(f'<h4 style="color:#1f77b4;">📍 {title}</h4>', unsafe_allow_html=True)
+        if os.path.exists(f"{img_name}.png"):
+            st.image(f"{img_name}.png", caption=title, use_container_width=True)
+        else:
+            st.warning(f"⚠️ {img_name}.png not found.")
+        st.write(desc)
+        st.markdown("---")
+
+    # --- Phase 2 Summary ---
+    st.markdown('<h3 class="sub-header">📌 Phase 2 Summary & Conclusion</h3>', unsafe_allow_html=True)
+    st.write("""
+    Phase 2 provided valuable insights into crime behavior across spatial, temporal, and categorical dimensions.
+
+    **Key Insights:**
+    - **Spatial Concentration:** Mission, Tenderloin, and SoMa remain high-crime neighborhoods.
+    - **Temporal Patterns:** Crime peaks on Fridays and Wednesdays, primarily between 12 PM–7 PM.
+    - **Dominant Crime Types:** Larceny/Theft and vehicle-related crimes dominate incident counts.
+    - **District Patterns:** Southern, Mission, and Central districts record the most cases.
+    - **Resolution Rates:** A notable percentage of cases remain unresolved, indicating improvement opportunities.
+
+    These insights lay a solid foundation for **Phase 3**, which will focus on **predictive modeling,
+    feature importance analysis, and resource allocation optimization**.
+    """)
+
+    st.success("✅ Phase 2 EDA successfully completed and integrated with visual insights.")
 
 # Footer
 st.markdown("---")

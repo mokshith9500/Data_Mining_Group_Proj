@@ -5,3 +5,6 @@ plotly.express
 requests
 python-dotenv
 wordcloud
+mlxtend
+sckit-learn
+imbalanced-learn

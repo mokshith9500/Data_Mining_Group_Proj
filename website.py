@@ -58,8 +58,14 @@ st.markdown("""
 st.markdown('<h1 class="main-header">🚔 Predicting Crime Patterns in San Francisco</h1>', unsafe_allow_html=True)
 st.markdown('<p style="text-align: center; font-size: 1.2rem; color: #666;">Optimizing Public Safety Resource Allocation Through Data Science</p>', unsafe_allow_html=True)
 
-# Create tabs - Added Phase 2 EDA as fourth tab
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Introduction", "👥 Team", "📋 Proposal Overview", "🔍 Phase 2 – EDA"])
+# Create tabs - Added Phase 2 EDA and Models Implemented as tabs
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "📊 Introduction",
+    "👥 Team",
+    "📋 Proposal Overview",
+    "🔍 Phase 2 – EDA",
+    "🧠 Models Implemented"
+])
 
 with tab1:
     st.markdown('<h2 class="sub-header">Research Topic & Significance</h2>', unsafe_allow_html=True)
@@ -257,7 +263,6 @@ with tab3:
     This analysis establishes a clean, structured, and interpretable dataset, enabling stakeholders to explore trends and form the foundation for predictive modeling and strategic recommendations in Phase 3.
     """)
 
-# Phase 2 EDA Tab
 with tab4:
     st.markdown('<h2 class="sub-header">🧠 Phase 2 – Exploratory Data Analysis (EDA)</h2>', unsafe_allow_html=True)
 
@@ -346,6 +351,242 @@ with tab4:
     """)
 
     st.success("✅ Phase 2 EDA successfully completed and integrated with visual insights.")
+
+with tab5:
+    st.markdown('<h2 class="sub-header">🧠 Models Implemented</h2>', unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="highlight-box">
+        <p>
+        This section summarizes the <b>machine learning models</b> implemented in our project, 
+        covering all four required categories:
+        <ul>
+            <li><b>Frequent Pattern Mining</b>: Apriori</li>
+            <li><b>Clustering</b>: K-Means</li>
+            <li><b>Classification</b>: Support Vector Machine (SVM)</li>
+            <li><b>Regression</b>: XGBoost & LightGBM</li>
+        </ul>
+        For each model, we explain <b>why it was chosen</b>, how the data was <b>prepared</b>, 
+        the <b>key hyperparameters</b>, and what the <b>results mean</b> in the context of crime analysis.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 1. APRIORI
+    st.markdown('<h3 class="sub-header">1️⃣ Frequent Pattern Mining – Apriori</h3>', unsafe_allow_html=True)
+    st.write("""
+    **Why this model?**  
+    We used the **Apriori algorithm** to discover which crime types tend to occur together
+    on the **same day within the same police district**. This helps identify *crime bundles* 
+    (e.g., Theft + Vehicle-related incidents) and can support **coordinated patrol strategies**.
+
+    **Data formatting:**  
+    - Created a composite `transaction_id = police_district + incident_date`.  
+    - Grouped incidents by (`transaction_id`, `incident_category`) and pivoted into a 
+      **binary transaction matrix** (1 = category occurred that day in that district, 0 = did not).  
+    - This converts our crime logs into a classic **market basket** structure.
+
+    **Key hyperparameters & rule filtering:**  
+    - `min_support = 0.01` → only itemsets appearing in at least 1% of district-days.  
+    - Generated association rules with:
+      - `metric = "lift"`  
+      - `min_threshold (lift) = 1.2`  
+      - filtered with **`confidence ≥ 0.30`**  
+    - Restricted rules to **≤ 2 items** on each side for readability.
+
+    **Metrics & interpretation:**  
+    - **Support:** how often a crime combination occurs across all district-days.  
+    - **Confidence:** how likely the consequent crime happens when the antecedent occurs.  
+    - **Lift > 1:** indicates crimes are positively associated rather than coincidental.  
+
+    **Insights:**  
+    - Property crimes such as theft and vehicle-related incidents show strong co-occurrence in certain 
+      districts (e.g., Mission, Tenderloin).  
+    - These patterns suggest that **joint prevention strategies** in those areas may be effective.
+    """)
+
+    st.markdown("---")
+
+    # 2. K-MEANS
+    st.markdown('<h3 class="sub-header">2️⃣ Clustering – K-Means</h3>', unsafe_allow_html=True)
+    st.write("""
+    **Why this model?**  
+    **K-Means** clustering was used to group locations or aggregated records into **clusters with similar crime patterns**.  
+    It is an **unsupervised** method that does not need labels, making it suitable for discovering 
+    hidden structure in crime data.
+
+    **Data preparation (conceptual):**  
+    - Constructed feature vectors summarizing crime activity, such as:
+      - counts or rates of incidents per district/neighborhood  
+      - temporal patterns (e.g., average incidents per day or hour).  
+    - Standardized numeric features so all variables contribute fairly to the distance measures.
+
+    **Key hyperparameters & assumptions:**  
+    - `n_clusters = k` (chosen based on interpretability and cluster quality).  
+    - `init = "k-means++"` for better centroid initialization.  
+    - Assumes:
+      - roughly spherical clusters in feature space  
+      - meaningful Euclidean distance after scaling.
+
+    **Interpretation & insights:**  
+    - Clusters can be interpreted as:
+      - **High-crime hotspots** (e.g., downtown / commercial centers)  
+      - **Moderate crime residential zones**  
+      - **Lower crime areas**  
+    - This helps identify **risk tiers** and supports **resource prioritization** based on cluster membership.
+    """)
+
+    st.markdown("---")
+
+    # 3. SVM CLASSIFICATION
+    st.markdown('<h3 class="sub-header">3️⃣ Classification – Support Vector Machine (SVM)</h3>', unsafe_allow_html=True)
+    st.write("""
+    **Why this model?**  
+    We used **Support Vector Machine (SVM)** to perform classification (e.g., predicting Police Districts or 
+    simplified crime classes) because:
+    - It works well with **high-dimensional feature spaces** after preprocessing.  
+    - With an **RBF kernel**, SVM can model complex, non-linear decision boundaries.  
+    - It is robust on medium-sized datasets and benefits from clear margins between classes.
+
+    **Data preparation for SVM:**  
+    - Standardized numerical features (such as coordinates and time features).  
+    - Applied **Principal Component Analysis (PCA)** to reduce dimensionality while preserving most variance.  
+    - Encoded the target label (e.g., district) using label encoding.  
+    - Performed a **stratified train–test split** to maintain class distribution.
+
+    **Key hyperparameters (conceptual):**  
+    - `kernel = "rbf"` (non-linear radial basis function kernel).  
+    - `C = 1.0` (controls margin vs misclassification trade-off).  
+    - `gamma = "scale"` (kernel width automatically scaled from data).
+
+    **Evaluation (typical metrics):**  
+    - **Accuracy:** overall proportion of correctly classified records.  
+    - **Precision, Recall, F1-score:** computed per class using `classification_report`.  
+    - Performance is moderate: the model distinguishes some districts well but struggles where 
+      crime patterns across districts are very similar.
+    """)
+
+    st.markdown("#### 🔍 SVM Decision Boundary (PC1 vs PC2)")
+    st.write("""
+    To better understand how SVM separates classes, we plotted the **decision boundary in PCA space**:
+
+    - The **colored regions** represent which class (e.g., district) SVM would predict for points in that area, 
+      based on the first two principal components (PC1 and PC2).  
+    - The **decision boundaries** are the sharp lines/curves where the color changes, showing where the model 
+      switches from predicting one class to another.  
+    - The **data points** overlayed on top show the actual observations projected into this 2D space.
+
+    **What this plot tells us:**  
+    - Some regions in PC space are clearly dominated by a single district → the model learned good separation.  
+    - In overlapping regions, multiple districts share similar patterns, making classification harder.  
+    - Non-linear boundaries demonstrate that the underlying relationships in crime data are **not linearly separable**.
+
+    This visualization helps interpret where SVM is confident and where it is likely to make mistakes.
+    """)
+
+    if os.path.exists("svm_decision_boundary.png"):
+        st.image("svm_decision_boundary.png", caption="SVM Decision Boundary (PC1 vs PC2)", use_container_width=True)
+
+    st.markdown("---")
+
+    # 4. XGBOOST REGRESSION
+    st.markdown('<h3 class="sub-header">4️⃣ Regression – XGBoost (Response Time Prediction)</h3>', unsafe_allow_html=True)
+    st.write("""
+    **Prediction task:**  
+    We model **police response time (in minutes)** as a regression problem, based on when and where 
+    the incident occurred and what category it belongs to.
+
+    **Why XGBoost?**  
+    - Designed for **tabular data** and handles non-linear feature interactions.  
+    - Supports **regularization** to help avoid overfitting.  
+    - Works well with both **numeric and encoded categorical** features.
+
+    **Key features used (after preprocessing):**  
+    - Numeric: `latitude`, `longitude`, `incident_hour`, `incident_weekday`, `incident_month`.  
+    - Target-encoded categorical: `police_district`, `analysis_neighborhood`, `incident_category`.  
+
+    **Target preparation:**  
+    - Raw response time computed as `report_datetime - incident_datetime` (in minutes).  
+    - Removed invalid/negative times.  
+    - Capped extreme values at the **95th percentile** → `response_time_capped`.  
+    - Applied log transform: `y_log = log1p(response_time_capped)` to reduce skewness.
+
+    **Hyperparameter tuning (RandomizedSearchCV, 3-fold):**  
+    - Best parameters:
+      - `n_estimators = 400`  
+      - `learning_rate = 0.01`  
+      - `max_depth = 4`  
+      - `subsample = 0.8`  
+      - `colsample_bytree = 0.8`  
+      - `reg_lambda = 5`  
+
+    **Performance (original minute scale, capped target):**  
+    - **Train:** RMSE ≈ **3432.4**, MAE ≈ **1217.6**, R² ≈ **0.536**.  
+    - **Test:**  RMSE ≈ **4591.8**, MAE ≈ **1728.9**, R² ≈ **0.216**.  
+
+    **Interpretation:**  
+    - The model explains about **54%** of variance in training data but only **21%** in test data,
+      indicating moderate overfitting and a very noisy target.  
+    - High MAE (on the order of many hours) suggests response time is strongly driven by factors not captured 
+      in our dataset (e.g., traffic, staffing, concurrent emergencies).  
+    - Still, XGBoost is our **best-performing regression model**, showing that some meaningful structure exists.
+    """)
+
+    st.markdown("---")
+
+    # 5. LIGHTGBM REGRESSION
+    st.markdown('<h3 class="sub-header">5️⃣ Regression – LightGBM (Comparison Model)</h3>', unsafe_allow_html=True)
+    st.write("""
+    **Why LightGBM?**  
+    LightGBM is another gradient boosting framework designed for **speed and efficiency**.  
+    We used it as a **comparison model** to XGBoost on the same regression task.
+
+    **Data pipeline:**  
+    - Uses the same `X_train_final`, `X_test_final`, and `y_log` as XGBoost.  
+    - Benefits from the same target encoding and scaling pipeline.
+
+    **Hyperparameter tuning (RandomizedSearchCV, 24 configs, 3-fold):**  
+    - Best parameters include:
+      - `learning_rate = 0.03`  
+      - `n_estimators = 100`  
+      - `max_depth = 3`  
+      - `num_leaves = 31`  
+      - `reg_alpha = 1.0`, `reg_lambda = 1.0`  
+      - `min_child_samples = 10`, `min_split_gain = 0.1`  
+      - `subsample = 0.8`, `colsample_bytree = 1.0`  
+
+    **Performance (original minute scale, capped target):**  
+    - **Train:** RMSE ≈ **3627.3**, MAE ≈ **1308.9**, R² ≈ **0.482**.  
+    - **Test:**  RMSE ≈ **4672.2**, MAE ≈ **1760.4**, R² ≈ **0.188**.  
+
+    **Comparison with XGBoost:**  
+    - XGBoost Test R² ≈ **0.216**, RMSE ≈ **4591.8**.  
+    - LightGBM Test R² ≈ **0.188**, RMSE ≈ **4672.2**.  
+    - LightGBM underfits slightly more than XGBoost, but confirms that **response time remains difficult 
+      to predict precisely** with the current features.
+
+    Overall, LightGBM provides a **second opinion** model that validates trends found by XGBoost.
+    """)
+
+    st.markdown("---")
+
+    st.markdown('<h3 class="sub-header">📌 Overall Model Summary</h3>', unsafe_allow_html=True)
+    st.write("""
+    | Category               | Model        | Main Goal                                    | Key Metrics / Outcome                         |
+    |------------------------|-------------|----------------------------------------------|-----------------------------------------------|
+    | Frequent Pattern Mining| Apriori     | Discover crime co-occurrence patterns        | Support, Confidence, Lift                     |
+    | Clustering             | K-Means     | Group areas by similar crime behavior        | Inertia, cluster separation (qualitative)     |
+    | Classification         | SVM (+ PCA) | Classify districts or crime types            | Accuracy, Precision, Recall, F1 (moderate)    |
+    | Regression             | XGBoost     | Predict police response time                 | Best Test R² ≈ 0.216                          |
+    | Regression             | LightGBM    | Validate and compare regression performance  | Test R² ≈ 0.188                               |
+
+    Together, these models provide a **multi-faceted understanding** of San Francisco crime:
+    - <b>Apriori</b> uncovers which crimes tend to occur together.  
+    - <b>K-Means</b> reveals clusters of regions with similar risk profiles.  
+    - <b>SVM</b> explores how separable districts or crime types are in feature space.  
+    - <b>XGBoost</b> and <b>LightGBM</b> attempt to predict response time, highlighting both 
+      the potential and limits of data-driven forecasting in public safety.
+    """)
 
 # Footer
 st.markdown("---")
